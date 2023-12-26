@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { useFetchMessage } from 'API/Queries/message';
-import { formatMessages } from 'Mappers/MessageMapper';
+import { useFetchMessages } from 'API/Queries/message';
 import { MessageResource } from 'Models/MessageResource';
 
 const useGetMessage = (id: number | string) => {
-  const { data, isLoading, isError, refetch, isFetching } = useFetchMessage(id);
+  const { data, isLoading, isError, refetch, isFetching } =
+    useFetchMessages(id);
 
   const [formattedData, setFormattedData] = useState<MessageResource[]>([]);
 
@@ -17,7 +17,7 @@ const useGetMessage = (id: number | string) => {
 
   useEffect(() => {
     if (data) {
-      const newData = formatMessages(data.data);
+      const newData = [...data];
       newData.sort(compareDates);
       setFormattedData(newData);
     }

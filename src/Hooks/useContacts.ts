@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { useFetchContacts } from 'API/Queries/contact';
-import { formatContacts } from 'Mappers/ContactMapper';
 import { ContactResource } from 'Models/ContactResource';
 
 const useGetContacts = () => {
@@ -23,7 +22,7 @@ const useGetContacts = () => {
 
   useEffect(() => {
     if (data) {
-      const newData = formatContacts(data.data);
+      const newData = [...data];
       newData.sort(compareNames);
       setFormattedData(newData);
     }

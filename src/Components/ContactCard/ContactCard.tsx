@@ -40,7 +40,7 @@ export default function ContactCard({ contact }: Props) {
     {
       onSuccess: (data) => {
         setScreenIsLoading(false);
-        goToChat(data.data.id);
+        goToChat(data.id);
       },
       onError: () => {
         setScreenIsLoading(false);

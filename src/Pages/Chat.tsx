@@ -26,7 +26,7 @@ function Chat() {
   }, [messageData, setChatIsLoading]);
 
   useEffect(() => {
-    if (data.id) setSelectedConversation(data);
+    if (data?.id) setSelectedConversation(data);
   }, [data, setSelectedConversation]);
 
   if (isError || messageError) return <ErrorState />;
@@ -38,7 +38,7 @@ function Chat() {
         subtitle="Type on the box bellow to start a conversation"
       />
     );
-  else return <ChatWindow members={data.members} messages={messageData} />;
+  else return <ChatWindow members={data?.members} messages={messageData} />;
 }
 
 export default React.memo(Chat);

@@ -26,7 +26,7 @@ export default function CreateGroup() {
     },
     {
       onSuccess: (data) => {
-        const { id } = data.data;
+        const { id } = data;
         navigate(`/chat/${id}`);
         setText('');
         setScreenIsLoading(false);

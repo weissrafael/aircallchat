@@ -2,10 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { axiosRequest } from 'API/axiosInstance';
 import { QueryKeys } from 'API/QueryKeys';
-import {
-  ConversationsResponseResource,
-  ConversationResponseResource,
-} from 'Models/ConversationResource';
+import { ConversationResource } from 'Models/ConversationResource';
 
 import { useLoggedUser } from '../../Stores/loggedUser';
 
@@ -14,9 +11,10 @@ export const useFetchConversations = () => {
   return useQuery(
     [QueryKeys.conversationList],
     async () => {
-      const response = await axiosRequest.get<ConversationsResponseResource>(
+      const response = await axiosRequest.get<ConversationResource[]>(
         `/user/${loggedUser.id}/conversation`
       );
+      console.log('resp', response);
       return response.data;
     },
     { refetchOnWindowFocus: false, refetchInterval: 5000 }
@@ -26,7 +24,7 @@ export const useFetchConversations = () => {
 export const useFetchConversation = (id: string) => {
   const { loggedUser } = useLoggedUser((state) => state);
   return useQuery([QueryKeys.conversation + id], async () => {
-    const response = await axiosRequest.get<ConversationResponseResource>(
+    const response = await axiosRequest.get<ConversationResource>(
       `/user/${loggedUser.id}/conversation/${id}`
     );
     return response.data;

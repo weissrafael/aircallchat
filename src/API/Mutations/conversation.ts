@@ -1,15 +1,16 @@
 import { axiosRequest } from 'API/axiosInstance';
-import { ConversationResponseResource } from 'Models/ConversationResource';
+
+import { ConversationResource } from '../../Models/ConversationResource';
 
 export const createConversation = async (
   userIds: number[],
   name: string,
   id: number | string
 ) => {
-  const response = await axiosRequest.post<ConversationResponseResource>(
+  const response = await axiosRequest.post<ConversationResource>(
     `/user/${id}/conversation`,
     {
-      user_ids: userIds,
+      userIds,
       name,
     }
   );

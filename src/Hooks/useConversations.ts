@@ -4,10 +4,6 @@ import {
   useFetchConversation,
   useFetchConversations,
 } from 'API/Queries/conversation';
-import {
-  conversationApiToFrontResource,
-  formatConversations,
-} from 'Mappers/ConversationMapper';
 import { ConversationResource } from 'Models/ConversationResource';
 
 const useGetConversations = () => {
@@ -24,8 +20,8 @@ const useGetConversations = () => {
   }
 
   useEffect(() => {
-    if (data) {
-      const newData = formatConversations(data.data);
+    if (data && data.length > 0) {
+      const newData = [...data];
       newData.sort(compareDates);
       setFormattedData(newData);
     }
@@ -42,20 +38,10 @@ const useGetConversations = () => {
 const useGetSingleConversation = (id: string) => {
   const { data, isLoading, isError } = useFetchConversation(id);
 
-  const [formattedData, setFormattedData] = useState<ConversationResource>(
-    {} as ConversationResource
-  );
-
-  useEffect(() => {
-    if (data) {
-      setFormattedData(conversationApiToFrontResource(data.data));
-    }
-  }, [data]);
-
   return {
     isLoading,
     isError,
-    data: formattedData,
+    data,
   };
 };
 
