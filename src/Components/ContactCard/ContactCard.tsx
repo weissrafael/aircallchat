@@ -35,7 +35,7 @@ export default function ContactCard({ contact }: Props) {
   const mutateCreateConversation = useMutation(
     async () => {
       setScreenIsLoading(true);
-      return await createConversation([id], name, loggedUser.id);
+      return await createConversation([id, loggedUser.id], name, loggedUser.id);
     },
     {
       onSuccess: (data) => {

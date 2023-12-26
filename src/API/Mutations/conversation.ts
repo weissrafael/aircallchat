@@ -7,6 +7,7 @@ export const createConversation = async (
   name: string,
   id: number | string
 ) => {
+  console.log('createConversation:', userIds, name, id);
   const response = await axiosRequest.post<ConversationResource>(
     `/user/${id}/conversation`,
     {
