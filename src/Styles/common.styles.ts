@@ -7,7 +7,6 @@ export const PageBody = styled.main`
   align-items: center;
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 120px);
   padding: 60px ${spacing.small} 0 ${spacing.small};
   @media (min-width: ${screens.medium}px) {
     padding: 80px 0 0 0;

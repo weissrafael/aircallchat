@@ -15,6 +15,7 @@ import CreateGroup from 'Pages/CreateGroup';
 import Inbox from 'Pages/Inbox';
 import Login from 'Pages/Login';
 import NotFound from 'Pages/NotFound';
+import SignUp from 'Pages/SignUp';
 import { useChatStore } from 'Stores/chat';
 import { useLoggedUser } from 'Stores/loggedUser';
 import { PageBody } from 'Styles/common.styles';
@@ -28,11 +29,14 @@ function App() {
   const { screenIsLoading } = useChatStore((state) => state);
   const { loggedUser } = useLoggedUser((state) => state);
 
+  const safeLocation =
+    location.pathname === '/' || location.pathname === '/signup';
+
   useEffect(() => {
-    if (loggedUser.id === 0 && location.pathname !== '/') {
+    if (loggedUser.id === 0 && !safeLocation) {
       navigate('/');
     }
-  }, [location.pathname, loggedUser, navigate]);
+  }, [loggedUser, navigate, safeLocation]);
 
   return (
     <span className={`${transitionStage}`} onAnimationEnd={onAnimationEnd}>
@@ -41,6 +45,7 @@ function App() {
       <PageBody>
         <Routes location={displayLocation}>
           <Route path="/" index element={<Login />} />
+          <Route path="signup" index element={<SignUp />} />
           <Route path="inbox" element={<Inbox />} />
           <Route path="contacts" element={<Contacts />} />
           <Route path="create-group" element={<CreateGroup />} />

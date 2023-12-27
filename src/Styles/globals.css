@@ -29,14 +29,8 @@ a {
 body::after {
   content: '';
   display: block;
-  height: 100px;
 }
 
-@media (min-width: 768px) {
-  body::after {
-    height: 130px;
-  }
-}
 .fadeIn {
   animation: 0.5s fadeIn forwards;
 }

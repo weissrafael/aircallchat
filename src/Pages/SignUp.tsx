@@ -5,12 +5,20 @@ import { SiteLogo } from 'Components/Header/styles';
 import RoundButton from 'Components/RoundButton/RoundButton';
 import useContacts from 'Hooks/useContacts';
 import { useLoggedUser } from 'Stores/loggedUser';
-import { LoginContainer, LoginInput, Space } from 'Styles/login.styles';
+import {
+  LoginContainer,
+  LoginInput,
+  Space,
+  FormRow,
+} from 'Styles/signUp.styles';
 import { spacing } from 'Styles/styleGuide';
 
-function Login() {
-  const [username, setUsername] = useState('');
+function SignUp() {
+  const [name, setName] = useState('');
+  const [lastName, setLastname] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
@@ -18,9 +26,9 @@ function Login() {
   const { setLoggedUser } = useLoggedUser((state) => state);
 
   const validateEmail = () => {
-    if (username === '') {
+    if (email === '') {
       setUsernameError('Username cannot be empty');
-    } else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(username)) {
+    } else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       setUsernameError('Please enter a valid email address');
     } else {
       setUsernameError('');
@@ -52,8 +60,8 @@ function Login() {
     validatePassword();
     if (!usernameError && !passwordError) {
       let id = 7;
-      if (isFirstCharBetween1And10(username)) {
-        id = parseInt(username.charAt(0));
+      if (isFirstCharBetween1And10(email)) {
+        id = parseInt(email.charAt(0));
       }
       const contact = contacts?.find((contact) => contact.id === id);
       const _id = contact?._id || '';
@@ -76,8 +84,7 @@ function Login() {
   return (
     <LoginContainer>
       <SiteLogo
-        width="486px"
-        height="168px"
+        height="100px"
         viewBox="0 0 486 168"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -113,10 +120,33 @@ function Login() {
         </g>
       </SiteLogo>
       <Space />
+      <FormRow>
+        <LoginInput
+          label="Name"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          helperText={usernameError}
+          error={!!usernameError}
+          type="email"
+          onKeyPress={handleKeyPress}
+          onBlur={validateEmail}
+        />
+        <Space />
+        <LoginInput
+          label="Lastname"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          helperText={usernameError}
+          error={!!usernameError}
+          type="email"
+          onKeyPress={handleKeyPress}
+          onBlur={validateEmail}
+        />
+      </FormRow>
       <LoginInput
         label="E-mail"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         helperText={usernameError}
         error={!!usernameError}
         type="email"
@@ -126,6 +156,16 @@ function Login() {
       <LoginInput
         type="password"
         label="Password"
+        value={password}
+        onChange={handlePasswordChange}
+        helperText={passwordError}
+        error={!!passwordError}
+        onKeyPress={handleKeyPress}
+        onBlur={validatePassword}
+      />
+      <LoginInput
+        type="password"
+        label="Confirm Password"
         value={password}
         onChange={handlePasswordChange}
         helperText={passwordError}
@@ -143,23 +183,23 @@ function Login() {
         disabled={
           !!usernameError ||
           !!passwordError ||
-          !username ||
+          !email ||
           password.length < 8 ||
           isLoading
         }
       >
-        Login
+        Continue
       </RoundButton>
       <RoundButton
         style={{ width: '100%', marginBottom: spacing.small }}
-        onClick={() => navigate('/signup')}
+        onClick={() => navigate('/')}
         variant="secondary"
         size="big"
       >
-        Sign Up
+        Go Back
       </RoundButton>
     </LoginContainer>
   );
 }
 
-export default React.memo(Login);
+export default React.memo(SignUp);

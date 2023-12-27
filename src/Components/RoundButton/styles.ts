@@ -82,6 +82,7 @@ export const StyledButton = styled.button<Props>`
     flex-direction: row;
     font-weight: ${fontWeights.bold};
     justify-content: center;
+    min-height: 2.8rem;
     padding: ${spacing.xSmall} ${spacing.small};
     transition: ${transitions.easeInOut2s};
     ${getVariantStyles(variant)}
