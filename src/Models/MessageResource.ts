@@ -1,6 +1,6 @@
 export interface MessageResource {
   _id: string;
-  userId: number;
+  userId: string;
   text: string;
   sentAt: string;
 }

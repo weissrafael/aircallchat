@@ -14,7 +14,6 @@ export const useFetchMessages = (id: string) => {
       const response = await axiosRequest.get<MessageResource[]>(
         `/user/${loggedUser._id}/conversation/${id}/message`
       );
-      console.log(response);
       return response.data;
     },
     {

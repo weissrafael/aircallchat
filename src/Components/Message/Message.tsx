@@ -22,9 +22,11 @@ interface Props {
 export default function Message({ message, members }: Props) {
   const membersIds = members?.map((member) => member.id);
   const { loggedUser } = useLoggedUser((state) => state);
-  const isFromOtherUser = message?.userId !== loggedUser.id;
+  const isFromOtherUser = message?.userId !== loggedUser._id;
   const isGroup = membersIds && membersIds?.length > 2;
-  const messageOwner = members?.find((member) => member.id === message?.userId);
+  const messageOwner = members?.find(
+    (member) => member._id === message?.userId
+  );
   const capitalName = messageOwner
     ? messageOwner.name.charAt(0).toUpperCase() + messageOwner.name.slice(1)
     : '';

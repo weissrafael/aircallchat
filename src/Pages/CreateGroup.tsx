@@ -22,7 +22,11 @@ export default function CreateGroup() {
   const mutateCreateConversation = useMutation(
     async () => {
       setScreenIsLoading(true);
-      return await createConversation(usersIds, text, loggedUser._id);
+      return await createConversation(
+        [...usersIds, loggedUser._id],
+        text,
+        loggedUser._id
+      );
     },
     {
       onSuccess: (data) => {
@@ -49,7 +53,7 @@ export default function CreateGroup() {
         label="Group Name"
         color="success"
         variant="outlined"
-        placeholder="Type Group Name..."
+        placeholder="The Fantastic Four"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />

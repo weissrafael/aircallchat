@@ -16,7 +16,7 @@ export const useChatStore = create<ChatStoreResource>((set) => ({
     _id: '',
     name: '',
     members: [{ _id: '', id: 1, name: '', lastSeenAt: '' }],
-    lastMessage: { _id: '', userId: 1, sentAt: '', text: '' },
+    lastMessage: { _id: '', userId: '', sentAt: '', text: '' },
   },
   setSelectedConversation: (conversation: ConversationResource) =>
     set(() => ({ selectedConversation: conversation })),

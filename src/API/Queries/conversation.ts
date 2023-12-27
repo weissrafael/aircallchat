@@ -13,6 +13,7 @@ export const useFetchConversations = () => {
       const response = await axiosRequest.get<ConversationResource[]>(
         `/user/${loggedUser._id}/conversation`
       );
+      console.log(response.data);
       return response.data;
     },
     { refetchOnWindowFocus: false, refetchInterval: 5000 }
