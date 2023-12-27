@@ -23,7 +23,7 @@ function ChatFooter() {
     setText(event.target.value);
   };
 
-  const mutateCreateConversation = useMutation(
+  const mutateCreateMessage = useMutation(
     async () => {
       setChatIsLoading(true);
       return await createMessage(
@@ -38,14 +38,15 @@ function ChatFooter() {
         refetch();
       },
       onError: () => {
+        setChatIsLoading(false);
         setText('');
       },
     }
   );
-  const { isLoading } = mutateCreateConversation;
+  const { isLoading } = mutateCreateMessage;
 
   const handleSend = () => {
-    mutateCreateConversation.mutate();
+    mutateCreateMessage.mutate();
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {

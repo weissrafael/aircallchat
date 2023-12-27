@@ -5,7 +5,7 @@ import { QueryKeys } from 'API/QueryKeys';
 import { MessageResource } from 'Models/MessageResource';
 import { useLoggedUser } from 'Stores/loggedUser';
 
-export const useFetchMessages = (id: string | number) => {
+export const useFetchMessages = (id: string) => {
   const { loggedUser } = useLoggedUser((state) => state);
 
   return useQuery(
@@ -14,6 +14,7 @@ export const useFetchMessages = (id: string | number) => {
       const response = await axiosRequest.get<MessageResource[]>(
         `/user/${loggedUser._id}/conversation/${id}/message`
       );
+      console.log(response);
       return response.data;
     },
     {
