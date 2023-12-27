@@ -43,7 +43,7 @@ function Inbox() {
         </PageHeader>
         <CardList>
           {dataFromApi.map((item) => (
-            <ConversationCard key={item.id} conversation={item} />
+            <ConversationCard key={item._id} conversation={item} />
           ))}
         </CardList>
       </>

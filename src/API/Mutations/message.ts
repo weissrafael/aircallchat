@@ -1,14 +1,13 @@
 import { axiosRequest } from 'API/axiosInstance';
-
-import { MessageResource } from '../../Models/MessageResource';
+import { MessageResource } from 'Models/MessageResource';
 
 export const createMessage = async (
-  conversationId: number,
+  conversationId: string,
   text: string,
-  id: string | number
+  _id: string
 ) => {
   const response = await axiosRequest.post<MessageResource>(
-    `/user/${id}/conversation/${conversationId}/message`,
+    `/user/${_id}/conversation/${conversationId}/message`,
     {
       text,
     }

@@ -26,7 +26,7 @@ function Chat() {
   }, [messageData, setChatIsLoading]);
 
   useEffect(() => {
-    if (data?.id) setSelectedConversation(data);
+    if (data?._id) setSelectedConversation(data);
   }, [data, setSelectedConversation]);
 
   if (isError || messageError) return <ErrorState />;

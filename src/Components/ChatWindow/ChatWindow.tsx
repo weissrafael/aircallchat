@@ -25,7 +25,9 @@ export default function ChatWindow({ messages, members }: Props) {
   return (
     <ChatBody>
       {messages?.map((message) => {
-        return <Message key={message.id} members={members} message={message} />;
+        return (
+          <Message key={message._id} members={members} message={message} />
+        );
       })}
       {chatIsLoading && <MessageLoader />}
       <div ref={bottomRef} />

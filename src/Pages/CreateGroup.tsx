@@ -15,19 +15,19 @@ export default function CreateGroup() {
   const { selectedUsers, reset } = useGroupStore((state) => state);
   const { loggedUser } = useLoggedUser((state) => state);
   const { setScreenIsLoading } = useChatStore((state) => state);
-  const usersIds = selectedUsers.map((item) => item.id);
+  const usersIds = selectedUsers.map((item) => item._id);
   const [text, setText] = useState<string>('');
   const navigate = useNavigate();
 
   const mutateCreateConversation = useMutation(
     async () => {
       setScreenIsLoading(true);
-      return await createConversation(usersIds, text, loggedUser.id);
+      return await createConversation(usersIds, text, loggedUser._id);
     },
     {
       onSuccess: (data) => {
-        const { id } = data;
-        navigate(`/chat/${id}`);
+        const { _id } = data;
+        navigate(`/chat/${_id}`);
         setText('');
         setScreenIsLoading(false);
         reset();

@@ -28,8 +28,6 @@ function App() {
   const { screenIsLoading } = useChatStore((state) => state);
   const { loggedUser } = useLoggedUser((state) => state);
 
-  console.log(loggedUser);
-
   useEffect(() => {
     if (loggedUser.id === 0 && location.pathname !== '/') {
       navigate('/');

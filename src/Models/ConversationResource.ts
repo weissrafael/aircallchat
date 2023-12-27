@@ -2,7 +2,7 @@ import { ContactResource } from './ContactResource';
 import { MessageResource } from './MessageResource';
 
 export interface ConversationResource {
-  id: number;
+  _id: string;
   name: string;
   members: ContactResource[];
   lastMessage: MessageResource;

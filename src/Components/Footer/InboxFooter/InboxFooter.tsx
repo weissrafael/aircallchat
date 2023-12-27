@@ -24,7 +24,7 @@ function InboxFooter() {
   const { activePage } = useCurrentPage.useCurrentPage();
   const { setLoggedUser } = useLoggedUser((state) => state);
   const handleLogout = () => {
-    setLoggedUser({ id: 0, name: '', lastSeenAt: '' });
+    setLoggedUser({ _id: '', id: 0, name: '', lastSeenAt: '' });
   };
   if (activePage === PagesEnum.login) return null;
 

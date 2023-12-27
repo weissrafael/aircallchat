@@ -17,7 +17,7 @@ function ChatFooter() {
   const { selectedConversation, setChatIsLoading } = useChatStore(
     (state) => state
   );
-  const { refetch } = useMessages.useGetMessage(selectedConversation.id);
+  const { refetch } = useMessages.useGetMessage(selectedConversation._id);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
@@ -26,7 +26,11 @@ function ChatFooter() {
   const mutateCreateConversation = useMutation(
     async () => {
       setChatIsLoading(true);
-      return await createMessage(selectedConversation.id, text, loggedUser.id);
+      return await createMessage(
+        selectedConversation._id,
+        text,
+        loggedUser._id
+      );
     },
     {
       onSuccess: () => {

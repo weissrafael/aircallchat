@@ -13,10 +13,10 @@ export interface ChatStoreResource {
 
 export const useChatStore = create<ChatStoreResource>((set) => ({
   selectedConversation: {
-    id: 1,
+    _id: '',
     name: '',
-    members: [{ id: 1, name: '', lastSeenAt: '' }],
-    lastMessage: { id: 1, userId: 1, sentAt: '', text: '' },
+    members: [{ _id: '', id: 1, name: '', lastSeenAt: '' }],
+    lastMessage: { _id: '', userId: 1, sentAt: '', text: '' },
   },
   setSelectedConversation: (conversation: ConversationResource) =>
     set(() => ({ selectedConversation: conversation })),

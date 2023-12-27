@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function ContactCard({ contact }: Props) {
-  const { id, name } = contact;
+  const { _id, name, id } = contact;
   const { loggedUser } = useLoggedUser((state) => state);
   const { activePage } = useCurrentPage.useCurrentPage();
   const navigate = useNavigate();
@@ -35,12 +35,16 @@ export default function ContactCard({ contact }: Props) {
   const mutateCreateConversation = useMutation(
     async () => {
       setScreenIsLoading(true);
-      return await createConversation([id, loggedUser.id], name, loggedUser.id);
+      return await createConversation(
+        [_id, loggedUser._id],
+        name,
+        loggedUser._id
+      );
     },
     {
       onSuccess: (data) => {
         setScreenIsLoading(false);
-        goToChat(data.id);
+        goToChat(data._id);
       },
       onError: () => {
         setScreenIsLoading(false);
@@ -48,7 +52,7 @@ export default function ContactCard({ contact }: Props) {
     }
   );
 
-  function goToChat(conversationId: number) {
+  function goToChat(conversationId: string) {
     navigate('/chat/' + conversationId);
   }
 

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { SiteLogo } from 'Components/Header/styles';
 import RoundButton from 'Components/RoundButton/RoundButton';
+import useContacts from 'Hooks/useContacts';
 import { useLoggedUser } from 'Stores/loggedUser';
 import { LoginContainer, LoginInput, Space } from 'Styles/login.styles';
 import { spacing } from 'Styles/styleGuide';
@@ -13,6 +14,7 @@ function Login() {
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
+  const { data: contacts, isLoading } = useContacts.useGetContacts();
   const { setLoggedUser } = useLoggedUser((state) => state);
 
   const validateEmail = () => {
@@ -53,7 +55,9 @@ function Login() {
       if (isFirstCharBetween1And10(username)) {
         id = parseInt(username.charAt(0));
       }
-      setLoggedUser({ id, name: '', lastSeenAt: '' });
+      const contact = contacts?.find((contact) => contact.id === id);
+      const _id = contact?._id || '';
+      setLoggedUser({ _id, id, name: '', lastSeenAt: '' });
       navigate('/inbox');
     }
   };
@@ -137,7 +141,11 @@ function Login() {
         variant="primary"
         size="big"
         disabled={
-          !!usernameError || !!passwordError || !username || password.length < 8
+          !!usernameError ||
+          !!passwordError ||
+          !username ||
+          password.length < 8 ||
+          isLoading
         }
       >
         Login

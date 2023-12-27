@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { AWSUserAvatarUrl } from 'Constants/AWS';
 import { ConversationResource } from 'Models/ConversationResource';
 import { useChatStore } from 'Stores/chat';
+import { useLoggedUser } from 'Stores/loggedUser';
 import { formatTime } from 'Utils/contact';
-
-import { useLoggedUser } from '../../Stores/loggedUser';
 
 import {
   ActivityInfo,
@@ -24,7 +23,7 @@ interface Props {
 }
 
 export default function ConversationCard({ conversation }: Props) {
-  const { id, name, members, lastMessage } = conversation;
+  const { _id, name, members, lastMessage } = conversation;
   const { loggedUser } = useLoggedUser((state) => state);
   const { text, sentAt } = lastMessage;
   const contact = members.find((member) => member.id !== loggedUser.id);
@@ -40,7 +39,7 @@ export default function ConversationCard({ conversation }: Props) {
 
   function handleClick() {
     setSelectedConversation(conversation);
-    navigate('/chat/' + id);
+    navigate('/chat/' + _id);
   }
 
   return (
