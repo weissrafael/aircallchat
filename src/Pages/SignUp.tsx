@@ -3,11 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { SiteLogo } from 'Components/Header/styles';
 import RoundButton from 'Components/RoundButton/RoundButton';
-import useContacts from 'Hooks/useContacts';
-import { useLoggedUser } from 'Stores/loggedUser';
 import {
-  LoginContainer,
-  LoginInput,
+  SignUpContainer,
+  SignUpInput,
   Space,
   FormRow,
 } from 'Styles/signUp.styles';
@@ -15,23 +13,37 @@ import { spacing } from 'Styles/styleGuide';
 
 function SignUp() {
   const [name, setName] = useState('');
-  const [lastName, setLastname] = useState('');
+  const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [usernameError, setUsernameError] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [lastnameError, setLastnameError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const navigate = useNavigate();
-  const { data: contacts, isLoading } = useContacts.useGetContacts();
-  const { setLoggedUser } = useLoggedUser((state) => state);
+  const [chooseAvatarMode, setChooseAvatarMode] = useState(false);
 
   const validateEmail = () => {
     if (email === '') {
-      setUsernameError('Username cannot be empty');
+      setEmailError('E-mail cannot be empty');
     } else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      setUsernameError('Please enter a valid email address');
+      setEmailError('Please enter a valid email address');
     } else {
-      setUsernameError('');
+      setEmailError('');
+    }
+  };
+
+  const validateName = () => {
+    if (name === '') {
+      setNameError('Name cannot be empty');
+    }
+  };
+
+  const validateLastname = () => {
+    if (lastname === '') {
+      setLastnameError('Lastname cannot be empty');
     }
   };
 
@@ -45,6 +57,16 @@ function SignUp() {
     }
   };
 
+  const validateConfirmPassword = () => {
+    if (confirmPassword === '') {
+      setConfirmPasswordError('Password cannot be empty');
+    } else if (password !== confirmPassword) {
+      setConfirmPasswordError('Passwords do not match');
+    } else {
+      setConfirmPasswordError('');
+    }
+  };
+
   function isFirstCharBetween1And10(inputString: string): boolean {
     if (inputString && !isNaN(parseInt(inputString[0], 10))) {
       const firstChar: number = parseInt(inputString[0], 10);
@@ -55,24 +77,26 @@ function SignUp() {
     return false;
   }
 
-  const handleLogin = () => {
+  const handleContinue = () => {
     validateEmail();
     validatePassword();
-    if (!usernameError && !passwordError) {
-      let id = 7;
-      if (isFirstCharBetween1And10(email)) {
-        id = parseInt(email.charAt(0));
-      }
-      const contact = contacts?.find((contact) => contact.id === id);
-      const _id = contact?._id || '';
-      setLoggedUser({ _id, id, name: '', lastSeenAt: '' });
-      navigate('/inbox');
+    validateConfirmPassword();
+    validateName();
+    validateLastname();
+    if (
+      !emailError &&
+      !passwordError &&
+      !confirmPasswordError &&
+      !nameError &&
+      !lastnameError
+    ) {
+      setChooseAvatarMode(true);
     }
   };
 
   function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
-      handleLogin();
+      handleContinue();
     }
   }
 
@@ -81,8 +105,13 @@ function SignUp() {
     setPassword(e.target.value);
   }
 
+  function handleConfirmPasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+    validateConfirmPassword();
+    setConfirmPassword(e.target.value);
+  }
+
   return (
-    <LoginContainer>
+    <SignUpContainer>
       <SiteLogo
         height="100px"
         viewBox="0 0 486 168"
@@ -121,39 +150,37 @@ function SignUp() {
       </SiteLogo>
       <Space />
       <FormRow>
-        <LoginInput
+        <SignUpInput
           label="Name"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          helperText={usernameError}
-          error={!!usernameError}
-          type="email"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          helperText={nameError}
+          error={!!nameError}
           onKeyPress={handleKeyPress}
-          onBlur={validateEmail}
+          onBlur={validateName}
         />
         <Space />
-        <LoginInput
+        <SignUpInput
           label="Lastname"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          helperText={usernameError}
-          error={!!usernameError}
-          type="email"
+          value={lastname}
+          onChange={(e) => setLastname(e.target.value)}
+          helperText={lastnameError}
+          error={!!lastnameError}
           onKeyPress={handleKeyPress}
-          onBlur={validateEmail}
+          onBlur={validateLastname}
         />
       </FormRow>
-      <LoginInput
+      <SignUpInput
         label="E-mail"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        helperText={usernameError}
-        error={!!usernameError}
+        helperText={emailError}
+        error={!!emailError}
         type="email"
         onKeyPress={handleKeyPress}
         onBlur={validateEmail}
       />
-      <LoginInput
+      <SignUpInput
         type="password"
         label="Password"
         value={password}
@@ -163,42 +190,41 @@ function SignUp() {
         onKeyPress={handleKeyPress}
         onBlur={validatePassword}
       />
-      <LoginInput
+      <SignUpInput
         type="password"
         label="Confirm Password"
-        value={password}
-        onChange={handlePasswordChange}
-        helperText={passwordError}
-        error={!!passwordError}
+        value={confirmPassword}
+        onChange={handleConfirmPasswordChange}
+        helperText={confirmPasswordError}
+        error={!!confirmPasswordError}
         onKeyPress={handleKeyPress}
-        onBlur={validatePassword}
+        onBlur={validateConfirmPassword}
       />
       <Space />
-      <Space />
       <RoundButton
-        style={{ width: '100%', marginBottom: spacing.small }}
-        onClick={handleLogin}
+        style={{ width: '100%', marginBottom: spacing.xsSmall }}
+        onClick={handleContinue}
         variant="primary"
         size="big"
         disabled={
-          !!usernameError ||
+          !!emailError ||
           !!passwordError ||
-          !email ||
-          password.length < 8 ||
-          isLoading
+          !!confirmPasswordError ||
+          !!nameError ||
+          !!lastnameError
         }
       >
         Continue
       </RoundButton>
       <RoundButton
-        style={{ width: '100%', marginBottom: spacing.small }}
+        style={{ width: '100%' }}
         onClick={() => navigate('/')}
         variant="secondary"
         size="big"
       >
         Go Back
       </RoundButton>
-    </LoginContainer>
+    </SignUpContainer>
   );
 }
 

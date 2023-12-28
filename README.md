@@ -36,7 +36,7 @@ Type any email that starts with an integer from 1 to 10, that will be your user 
 - 10 - Wessel
 
 ## App Features
-- [x] Enter a username + password to login
+- [x] Enter a email + password to login
 - [x] Type any email that starts with an integer from 1 to 10, that will be your user id!
 - [x] Login input validations for email and password
 - [x] Messages ordered by most recent

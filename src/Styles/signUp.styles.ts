@@ -3,12 +3,17 @@ import styled from 'styled-components';
 
 import { spacing, colors } from './styleGuide';
 
-export const LoginContainer = styled.div`
+export const SignUpContainer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  max-height: 80vh;
   width: 100%;
+  .MuiFormHelperText-contained {
+    position: absolute;
+    top: 54px;
+  }
 `;
 
 export const FormRow = styled.div`
@@ -19,8 +24,9 @@ export const FormRow = styled.div`
   width: 100%;
 `;
 
-export const LoginInput = styled(TextField)`
-  margin-top: ${spacing.small} !important;
+export const SignUpInput = styled(TextField)`
+  margin-bottom: ${spacing.small} !important;
+  margin-top: ${spacing.xSmall} !important;
   width: 100%;
   label {
     color: ${colors.gray9} !important;

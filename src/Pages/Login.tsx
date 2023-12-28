@@ -9,21 +9,21 @@ import { LoginContainer, LoginInput, Space } from 'Styles/login.styles';
 import { spacing } from 'Styles/styleGuide';
 
 function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [usernameError, setUsernameError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
   const { data: contacts, isLoading } = useContacts.useGetContacts();
   const { setLoggedUser } = useLoggedUser((state) => state);
 
   const validateEmail = () => {
-    if (username === '') {
-      setUsernameError('Username cannot be empty');
-    } else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(username)) {
-      setUsernameError('Please enter a valid email address');
+    if (email === '') {
+      setEmailError('E-mail cannot be empty');
+    } else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      setEmailError('Please enter a valid email address');
     } else {
-      setUsernameError('');
+      setEmailError('');
     }
   };
 
@@ -50,10 +50,10 @@ function Login() {
   const handleLogin = () => {
     validateEmail();
     validatePassword();
-    if (!usernameError && !passwordError) {
+    if (!emailError && !passwordError) {
       let id = 7;
-      if (isFirstCharBetween1And10(username)) {
-        id = parseInt(username.charAt(0));
+      if (isFirstCharBetween1And10(email)) {
+        id = parseInt(email.charAt(0));
       }
       const contact = contacts?.find((contact) => contact.id === id);
       const _id = contact?._id || '';
@@ -115,10 +115,10 @@ function Login() {
       <Space />
       <LoginInput
         label="E-mail"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        helperText={usernameError}
-        error={!!usernameError}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        helperText={emailError}
+        error={!!emailError}
         type="email"
         onKeyPress={handleKeyPress}
         onBlur={validateEmail}
@@ -141,9 +141,9 @@ function Login() {
         variant="primary"
         size="big"
         disabled={
-          !!usernameError ||
+          !!emailError ||
           !!passwordError ||
-          !username ||
+          !email ||
           password.length < 8 ||
           isLoading
         }
