@@ -4,19 +4,19 @@ import styled, { css } from 'styled-components';
 import { colors, screens, spacing } from './styleGuide';
 
 interface AvatarImageProps {
-  noPadding: boolean;
+  safeLocation: boolean;
 }
 
 export const PageBody = styled.main<AvatarImageProps>`
-  ${({ noPadding }) => css`
+  ${({ safeLocation }) => css`
     align-items: center;
     display: flex;
     flex-direction: column;
     height: 100vh;
-    justify-content: center;
-    padding: ${noPadding ? 0 : `60px ${spacing.small} 0 ${spacing.small}`};
+    justify-content: ${safeLocation ? 'center' : 'flex-start'};
+    padding: ${safeLocation ? 0 : `60px ${spacing.small} 0 ${spacing.small}`};
     @media (min-width: ${screens.medium}px) {
-      padding: ${noPadding ? 0 : `80px 0 0 0`};
+      padding: ${safeLocation ? 0 : `80px 0 0 0`};
       max-width: 500px;
       margin: 0 auto;
     }
