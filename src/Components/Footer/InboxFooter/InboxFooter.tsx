@@ -3,6 +3,7 @@ import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import Person2Icon from '@mui/icons-material/Person2';
 import SettingsIcon from '@mui/icons-material/Settings';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import NewChatButton from 'Components/NewChatButton/NewChatButton';
 import useCurrentPage from 'Hooks/useCurrentPage';
@@ -21,8 +22,9 @@ import {
 const mockNumberOfCalls = 7;
 
 function InboxFooter() {
+  const navigate = useNavigate();
   const { activePage } = useCurrentPage.useCurrentPage();
-  const { setLoggedUser } = useLoggedUser((state) => state);
+  const { setLoggedUser, setToken } = useLoggedUser((state) => state);
   const handleLogout = () => {
     setLoggedUser({
       _id: '',
@@ -31,6 +33,8 @@ function InboxFooter() {
       lastSeenAt: '',
       imageUrl: '',
     });
+    setToken('');
+    navigate('/');
   };
   if (activePage === PagesEnum.login) return null;
 

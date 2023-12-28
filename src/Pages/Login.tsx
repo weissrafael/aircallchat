@@ -1,21 +1,23 @@
+import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { SiteLogo } from 'Components/Header/styles';
 import RoundButton from 'Components/RoundButton/RoundButton';
-import useContacts from 'Hooks/useContacts';
 import { useLoggedUser } from 'Stores/loggedUser';
 import { LoginContainer, LoginInput, Space } from 'Styles/login.styles';
 import { spacing } from 'Styles/styleGuide';
+
+import { loginContact } from '../API/Mutations/contact';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { data: contacts, isLoading } = useContacts.useGetContacts();
-  const { setLoggedUser } = useLoggedUser((state) => state);
+  const { setLoggedUser, setToken } = useLoggedUser((state) => state);
 
   const validateEmail = () => {
     if (email === '') {
@@ -37,28 +39,30 @@ function Login() {
     }
   };
 
-  function isFirstCharBetween1And10(inputString: string): boolean {
-    if (inputString && !isNaN(parseInt(inputString[0], 10))) {
-      const firstChar: number = parseInt(inputString[0], 10);
-      if (firstChar >= 1 && firstChar <= 10) {
-        return true;
-      }
+  const mutateLoginContact = useMutation(
+    async () => {
+      setIsLoading(true);
+      return await loginContact(email, password);
+    },
+    {
+      onSuccess: (data) => {
+        const { token, user } = data;
+        setLoggedUser(user);
+        setToken(token);
+        setIsLoading(false);
+        navigate('/inbox');
+      },
+      onError: () => {
+        setIsLoading(false);
+      },
     }
-    return false;
-  }
+  );
 
   const handleLogin = () => {
     validateEmail();
     validatePassword();
     if (!emailError && !passwordError) {
-      let id = 7;
-      if (isFirstCharBetween1And10(email)) {
-        id = parseInt(email.charAt(0));
-      }
-      // const contact = contacts?.find((contact) => contact._id === id);
-      // const _id = contact?._id || '';
-      // setLoggedUser({ _id, name: '', las lastSeenAt: '' });
-      navigate('/inbox');
+      mutateLoginContact.mutate();
     }
   };
 

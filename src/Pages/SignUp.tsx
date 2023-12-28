@@ -2,8 +2,12 @@ import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { createNewContact } from 'API/Mutations/contact';
+import ChooseAvatar from 'Components/ChooseAvatar/ChooseAvatar';
+import FullScreenLoader from 'Components/FullscreenLoader/FullScreenLoader';
 import { SiteLogo } from 'Components/Header/styles';
 import RoundButton from 'Components/RoundButton/RoundButton';
+import { useLoggedUser } from 'Stores/loggedUser';
 import {
   SignUpContainer,
   SignUpInput,
@@ -11,10 +15,6 @@ import {
   FormRow,
 } from 'Styles/signUp.styles';
 import { spacing } from 'Styles/styleGuide';
-
-import { createNewContact } from '../API/Mutations/contact';
-import ChooseAvatar from '../Components/ChooseAvatar/ChooseAvatar';
-import FullScreenLoader from '../Components/FullscreenLoader/FullScreenLoader';
 
 function SignUp() {
   const [name, setName] = useState('');
@@ -31,6 +31,7 @@ function SignUp() {
   const [chooseAvatarMode, setChooseAvatarMode] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const { setToken, setLoggedUser } = useLoggedUser((state) => state);
 
   const mutateCreateNewContact = useMutation(
     async () => {
@@ -48,9 +49,12 @@ function SignUp() {
       );
     },
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        const { token, user } = data;
         setIsLoading(false);
-        navigate('/inbox');
+        setToken(token);
+        setLoggedUser(user);
+        navigate('/login');
       },
       onError: () => {
         setIsLoading(false);
