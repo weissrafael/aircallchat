@@ -8,11 +8,15 @@ export const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-height: 80vh;
+  max-height: 70vh;
   width: 100%;
   .MuiFormHelperText-contained {
     position: absolute;
     top: 54px;
+  }
+  h1 {
+    color: ${colors.gray10};
+    margin: 0;
   }
 `;
 
@@ -49,6 +53,6 @@ export const SignUpInput = styled(TextField)`
 `;
 
 export const Space = styled.div`
-  height: ${spacing.medium};
-  width: ${spacing.medium};
+  min-height: ${spacing.medium};
+  min-width: ${spacing.medium};
 `;
