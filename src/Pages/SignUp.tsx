@@ -54,7 +54,7 @@ function SignUp() {
         setIsLoading(false);
         setToken(token);
         setLoggedUser(user);
-        navigate('/login');
+        navigate('/inbox');
       },
       onError: () => {
         setIsLoading(false);

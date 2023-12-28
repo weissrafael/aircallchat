@@ -27,16 +27,16 @@ function App() {
   const location = useLocation();
 
   const { screenIsLoading } = useChatStore((state) => state);
-  const { loggedUser } = useLoggedUser((state) => state);
+  const { token } = useLoggedUser((state) => state);
 
   const safeLocation =
     location.pathname === '/' || location.pathname === '/signup';
 
   useEffect(() => {
-    if (!!loggedUser._id && !safeLocation) {
+    if (token === '' && !safeLocation) {
       navigate('/');
     }
-  }, [loggedUser, navigate, safeLocation]);
+  }, [token, navigate, safeLocation]);
 
   return (
     <span className={`${transitionStage}`} onAnimationEnd={onAnimationEnd}>

@@ -9,6 +9,7 @@ import { LoginContainer, LoginInput, Space } from 'Styles/login.styles';
 import { spacing } from 'Styles/styleGuide';
 
 import { loginContact } from '../API/Mutations/contact';
+import FullScreenLoader from '../Components/FullscreenLoader/FullScreenLoader';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -47,10 +48,11 @@ function Login() {
     {
       onSuccess: (data) => {
         const { token, user } = data;
+        console.log('data', data);
         setLoggedUser(user);
         setToken(token);
-        setIsLoading(false);
         navigate('/inbox');
+        setIsLoading(false);
       },
       onError: () => {
         setIsLoading(false);
@@ -161,6 +163,7 @@ function Login() {
       >
         Sign Up
       </RoundButton>
+      <FullScreenLoader isLoading={isLoading} />
     </LoginContainer>
   );
 }
