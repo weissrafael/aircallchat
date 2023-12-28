@@ -1,18 +1,26 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { colors, screens, spacing } from './styleGuide';
 
-export const PageBody = styled.main`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  padding: 60px ${spacing.small} 0 ${spacing.small};
-  @media (min-width: ${screens.medium}px) {
-    padding: 80px 0 0 0;
-    max-width: 500px;
-    margin: auto;
-  }
+interface AvatarImageProps {
+  noPadding: boolean;
+}
+
+export const PageBody = styled.main<AvatarImageProps>`
+  ${({ noPadding }) => css`
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    padding: ${noPadding ? 0 : `60px ${spacing.small} 0 ${spacing.small}`};
+    @media (min-width: ${screens.medium}px) {
+      padding: ${noPadding ? 0 : `80px 0 0 0`};
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  `}
 `;
 
 export const PageHeader = styled.div`

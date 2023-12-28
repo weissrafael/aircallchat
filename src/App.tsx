@@ -42,7 +42,7 @@ function App() {
     <span className={`${transitionStage}`} onAnimationEnd={onAnimationEnd}>
       <FullScreenLoader isLoading={screenIsLoading} />
       <Header />
-      <PageBody>
+      <PageBody noPadding={safeLocation}>
         <Routes location={displayLocation}>
           <Route path="/" index element={<Login />} />
           <Route path="signup" index element={<SignUp />} />

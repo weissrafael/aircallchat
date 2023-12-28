@@ -8,7 +8,6 @@ export const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-height: 70vh;
   width: 100%;
   .MuiFormHelperText-contained {
     position: absolute;
