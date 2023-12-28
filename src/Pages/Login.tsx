@@ -55,9 +55,9 @@ function Login() {
       if (isFirstCharBetween1And10(email)) {
         id = parseInt(email.charAt(0));
       }
-      const contact = contacts?.find((contact) => contact.id === id);
-      const _id = contact?._id || '';
-      setLoggedUser({ _id, id, name: '', lastSeenAt: '' });
+      // const contact = contacts?.find((contact) => contact._id === id);
+      // const _id = contact?._id || '';
+      // setLoggedUser({ _id, name: '', las lastSeenAt: '' });
       navigate('/inbox');
     }
   };
@@ -112,7 +112,6 @@ function Login() {
           />
         </g>
       </SiteLogo>
-      <Space />
       <LoginInput
         label="E-mail"
         value={email}

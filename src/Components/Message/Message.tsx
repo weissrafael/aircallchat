@@ -20,7 +20,7 @@ interface Props {
 }
 
 export default function Message({ message, members }: Props) {
-  const membersIds = members?.map((member) => member.id);
+  const membersIds = members?.map((member) => member._id);
   const { loggedUser } = useLoggedUser((state) => state);
   const isFromOtherUser = message?.userId !== loggedUser._id;
   const isGroup = membersIds && membersIds?.length > 2;
@@ -30,7 +30,7 @@ export default function Message({ message, members }: Props) {
   const capitalName = messageOwner
     ? messageOwner.name.charAt(0).toUpperCase() + messageOwner.name.slice(1)
     : '';
-  const avatarUrl = AWSUserAvatarUrl + 'user' + messageOwner?.id + '.png';
+  const avatarUrl = AWSUserAvatarUrl + messageOwner?.imageUrl;
   return (
     <MessageBody isFromOtherUser={isFromOtherUser}>
       <MessageContent isGroup={isGroup} isFromOtherUser={isFromOtherUser}>

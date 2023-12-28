@@ -23,11 +23,13 @@ function ChatHeader() {
   const { sentAt } = lastMessage || { sentAt: '' };
   const { loggedUser } = useLoggedUser((state) => state);
   const { _id } = loggedUser;
-  const { id } = members?.find((member) => member._id !== _id) || { id: '' };
+  const { imageUrl } = members?.find((member) => member._id !== _id) || {
+    id: '',
+  };
   const isGroup = members && members?.length > 2;
   const date = formatTime(sentAt);
   const capitalName = name.charAt(0).toUpperCase() + name.slice(1);
-  const avatarUrl = AWSUserAvatarUrl + 'user' + id + '.png';
+  const avatarUrl = AWSUserAvatarUrl + imageUrl;
 
   return (
     <HeaderChatContainer>

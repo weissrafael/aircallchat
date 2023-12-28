@@ -11,7 +11,13 @@ export interface LoggedUserResource {
 export const useLoggedUser = create(
   persist<LoggedUserResource>(
     (set) => ({
-      loggedUser: { _id: '', id: 0, name: '', lastSeenAt: '' },
+      loggedUser: {
+        _id: '',
+        lastname: '',
+        name: '',
+        lastSeenAt: '',
+        imageUrl: '',
+      },
       setLoggedUser: (user: ContactResource) => set({ loggedUser: user }),
     }),
     {

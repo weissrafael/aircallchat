@@ -1,3 +1,4 @@
+import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,7 +12,9 @@ import {
 } from 'Styles/signUp.styles';
 import { spacing } from 'Styles/styleGuide';
 
+import { createNewContact } from '../API/Mutations/contact';
 import ChooseAvatar from '../Components/ChooseAvatar/ChooseAvatar';
+import FullScreenLoader from '../Components/FullscreenLoader/FullScreenLoader';
 
 function SignUp() {
   const [name, setName] = useState('');
@@ -26,6 +29,34 @@ function SignUp() {
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const navigate = useNavigate();
   const [chooseAvatarMode, setChooseAvatarMode] = useState(false);
+  const [selectedAvatar, setSelectedAvatar] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const mutateCreateNewContact = useMutation(
+    async () => {
+      setIsLoading(true);
+      return await createNewContact(
+        {
+          name,
+          lastname,
+          imageUrl: 'user' + selectedAvatar + '.png',
+          lastSeenAt: new Date().toString(),
+          _id: 'not needed for registration',
+        },
+        email,
+        password
+      );
+    },
+    {
+      onSuccess: () => {
+        setIsLoading(false);
+        navigate('/inbox');
+      },
+      onError: () => {
+        setIsLoading(false);
+      },
+    }
+  );
 
   const validateEmail = () => {
     if (email === '') {
@@ -106,17 +137,24 @@ function SignUp() {
     setConfirmPassword(e.target.value);
   }
 
+  function CreateNewAccount() {
+    mutateCreateNewContact.mutate();
+  }
+
   return (
     <SignUpContainer>
       {chooseAvatarMode ? (
         <>
           <h1>Choose your avatar</h1>
           <Space />
-          <ChooseAvatar />
+          <ChooseAvatar
+            selectedAvatar={selectedAvatar}
+            setSelectedAvatar={setSelectedAvatar}
+          />
           <Space />
           <RoundButton
             style={{ width: '100%', marginBottom: spacing.xsSmall }}
-            onClick={handleContinue}
+            onClick={CreateNewAccount}
             variant="primary"
             size="big"
             disabled={
@@ -275,6 +313,7 @@ function SignUp() {
           </RoundButton>
         </>
       )}
+      <FullScreenLoader isLoading={isLoading} />
     </SignUpContainer>
   );
 }

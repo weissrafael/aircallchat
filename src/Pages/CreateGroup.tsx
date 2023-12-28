@@ -73,7 +73,7 @@ export default function CreateGroup() {
       <Space />
       <CardList>
         {selectedUsers.map((item) => (
-          <ContactCard key={item.id} contact={item} />
+          <ContactCard key={item._id} contact={item} />
         ))}
       </CardList>
     </>

@@ -25,7 +25,7 @@ export const useGroupStore = create<ChatGroupResource>((set) => ({
     }),
   removeUser: (user: ContactResource) => {
     set((state) => ({
-      selectedUsers: state.selectedUsers.filter((u) => u.id !== user.id),
+      selectedUsers: state.selectedUsers.filter((u) => u._id !== user._id),
     }));
   },
   addUser: (user: ContactResource) =>

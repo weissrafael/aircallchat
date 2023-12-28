@@ -33,7 +33,7 @@ function App() {
     location.pathname === '/' || location.pathname === '/signup';
 
   useEffect(() => {
-    if (loggedUser.id === 0 && !safeLocation) {
+    if (!!loggedUser._id && !safeLocation) {
       navigate('/');
     }
   }, [loggedUser, navigate, safeLocation]);

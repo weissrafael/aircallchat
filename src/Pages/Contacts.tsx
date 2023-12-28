@@ -60,8 +60,8 @@ function Contacts() {
         </PageHeader>
         <CardList>
           {dataFromApi.map((item) => {
-            if (item.id === loggedUser.id) return null;
-            return <ContactCard key={item.id} contact={item} />;
+            if (item._id === loggedUser._id) return null;
+            return <ContactCard key={item._id} contact={item} />;
           })}
         </CardList>
       </>

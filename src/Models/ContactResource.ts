@@ -1,6 +1,7 @@
 export interface ContactResource {
   _id: string;
-  id: number;
+  imageUrl: string;
   name: string;
+  lastname: string;
   lastSeenAt: string;
 }

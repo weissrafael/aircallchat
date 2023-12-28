@@ -26,11 +26,11 @@ export default function ConversationCard({ conversation }: Props) {
   const { _id, name, members, lastMessage } = conversation;
   const { loggedUser } = useLoggedUser((state) => state);
   const { text, sentAt } = lastMessage;
-  const contact = members.find((member) => member.id !== loggedUser.id);
+  const contact = members.find((member) => member._id !== loggedUser._id);
   const isGroup = members && members?.length > 2;
   const navigate = useNavigate();
   const date = formatTime(sentAt);
-  const avatarUrl = AWSUserAvatarUrl + 'user' + contact?.id + '.png';
+  const avatarUrl = AWSUserAvatarUrl + contact?.imageUrl;
   const targetName = isGroup ? name : contact?.name;
   const capitalName = targetName
     ? targetName.charAt(0).toUpperCase() + targetName?.slice(1)

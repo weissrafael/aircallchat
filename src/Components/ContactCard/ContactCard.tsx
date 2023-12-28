@@ -18,11 +18,11 @@ interface Props {
 }
 
 export default function ContactCard({ contact }: Props) {
-  const { _id, name, id } = contact;
+  const { _id, name, imageUrl } = contact;
   const { loggedUser } = useLoggedUser((state) => state);
   const { activePage } = useCurrentPage.useCurrentPage();
   const navigate = useNavigate();
-  const avatarUrl = AWSUserAvatarUrl + 'user' + id + '.png';
+  const avatarUrl = AWSUserAvatarUrl + imageUrl;
   const capitalName = name.charAt(0).toUpperCase() + name.slice(1);
   const { isGroupMode, addUser, selectedUsers, removeUser } = useGroupStore(
     (state) => state
@@ -30,7 +30,7 @@ export default function ContactCard({ contact }: Props) {
   const { setScreenIsLoading } = useChatStore((state) => state);
   const isForSelection = isGroupMode && activePage === PagesEnum.contacts;
   const isSelected =
-    isForSelection && selectedUsers.some((user) => user.id === id);
+    isForSelection && selectedUsers.some((user) => user._id === _id);
 
   const mutateCreateConversation = useMutation(
     async () => {
