@@ -69,7 +69,8 @@ function Login() {
   const handleLogin = () => {
     validateEmail();
     validatePassword();
-    if (!emailError && !passwordError) {
+    const anyInputIsEmpty = email === '' || password === '';
+    if (!emailError && !passwordError && !anyInputIsEmpty) {
       mutateLoginContact.mutate();
     }
   };

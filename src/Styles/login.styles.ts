@@ -11,6 +11,7 @@ export const LoginContainer = styled.div`
   width: 100%;
   .MuiFormHelperText-contained {
     border-radius: 12px;
+    pointer-events: none;
     position: absolute;
     right: 0;
     top: 30px;
