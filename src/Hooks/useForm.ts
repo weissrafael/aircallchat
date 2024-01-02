@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { FormState } from 'Models/ContactResource'; // Assumed external validation functions
 import { emailValidation, passwordValidation } from 'Utils/inputValidation';
 
-const useSignUpForm = () => {
+const useForm = () => {
   const [formState, setFormState] = useState<FormState>({
     name: '',
     lastname: '',
@@ -12,6 +12,14 @@ const useSignUpForm = () => {
     confirmPassword: '',
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  useEffect(() => {
+    Object.keys(formState).forEach((field) => {
+      if (formState[field as keyof FormState] !== '') {
+        validateInput(field as keyof FormState);
+      }
+    });
+  }, [formState]);
 
   const updateInput = (field: keyof FormState, value: string) => {
     setFormState({ ...formState, [field]: value });
@@ -54,4 +62,4 @@ const useSignUpForm = () => {
   return { formState, updateInput, validateInput, canProceed, errors };
 };
 
-export default useSignUpForm;
+export default useForm;

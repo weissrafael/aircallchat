@@ -7,7 +7,7 @@ import AvatarSelection from 'Components/AvatarSelection/AvatarSelection';
 import FullScreenLoader from 'Components/FullscreenLoader/FullScreenLoader';
 import SignUpForm from 'Components/SignUpForm/SignUpForm';
 import SiteLogo from 'Components/SiteLogo/SiteLogo';
-import useSignUpForm from 'Hooks/useSignUpForm';
+import useForm from 'Hooks/useForm';
 import { useLoggedUser } from 'Stores/loggedUser';
 import { SignUpContainer } from 'Styles/signUp.styles';
 
@@ -22,7 +22,7 @@ const SignUp: React.FC = () => {
   const navigate = useNavigate();
 
   const { formState, updateInput, validateInput, canProceed, errors } =
-    useSignUpForm();
+    useForm();
 
   const { mutate, isLoading } = useMutation(createNewContact, {
     onSuccess: (data: { token: string; user: ContactResource }) => {
