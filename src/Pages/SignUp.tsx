@@ -8,10 +8,9 @@ import FullScreenLoader from 'Components/FullscreenLoader/FullScreenLoader';
 import SignUpForm from 'Components/SignUpForm/SignUpForm';
 import SiteLogo from 'Components/SiteLogo/SiteLogo';
 import useForm from 'Hooks/useForm';
+import { ContactResource } from 'Models/ContactResource';
 import { useLoggedUser } from 'Stores/loggedUser';
 import { SignUpContainer } from 'Styles/signUp.styles';
-
-import { ContactResource, FormState } from '../Models/ContactResource';
 
 const DEFAULT_AVATAR = 1;
 
