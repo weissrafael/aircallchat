@@ -247,7 +247,7 @@ function SignUp() {
               onChange={(e) => setName(e.target.value)}
               helperText={nameError}
               error={!!nameError}
-              onKeyPress={handleKeyPress}
+              onKeyUp={handleKeyPress}
               onBlur={validateName}
             />
             <Space />
@@ -257,7 +257,7 @@ function SignUp() {
               onChange={(e) => setLastname(e.target.value)}
               helperText={lastnameError}
               error={!!lastnameError}
-              onKeyPress={handleKeyPress}
+              onKeyUp={handleKeyPress}
               onBlur={validateLastname}
             />
           </FormRow>
@@ -268,7 +268,7 @@ function SignUp() {
             helperText={emailError}
             error={!!emailError}
             type="email"
-            onKeyPress={handleKeyPress}
+            onKeyUp={handleKeyPress}
             onBlur={validateEmail}
           />
           <SignUpInput
@@ -278,7 +278,7 @@ function SignUp() {
             onChange={handlePasswordChange}
             helperText={passwordError}
             error={!!passwordError}
-            onKeyPress={handleKeyPress}
+            onKeyUp={handleKeyPress}
             onBlur={validatePassword}
           />
           <SignUpInput
@@ -288,7 +288,7 @@ function SignUp() {
             onChange={handleConfirmPasswordChange}
             helperText={confirmPasswordError}
             error={!!confirmPasswordError}
-            onKeyPress={handleKeyPress}
+            onKeyUp={handleKeyPress}
             onBlur={validateConfirmPassword}
           />
           <Space />

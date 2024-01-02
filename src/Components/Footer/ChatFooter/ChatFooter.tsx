@@ -67,7 +67,7 @@ function ChatFooter() {
             value={text}
             placeholder="Type a message..."
             multiline
-            onKeyPress={handleKeyPress}
+            onKeyUp={handleKeyPress}
             label="Message"
             inputProps={{ maxLength: 500 }}
           />

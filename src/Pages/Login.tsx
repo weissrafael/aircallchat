@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { SiteLogo } from 'Components/Header/styles';
@@ -17,8 +17,20 @@ function Login() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [untouched, setUntouched] = useState(true);
   const navigate = useNavigate();
   const { setLoggedUser, setToken } = useLoggedUser((state) => state);
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/inbox');
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    validateEmail();
+    validatePassword();
+  }, [email, password]);
 
   const validateEmail = () => {
     if (email === '') {
@@ -78,6 +90,11 @@ function Login() {
     setPassword(e.target.value);
   }
 
+  function handleLoginChange(e: React.ChangeEvent<HTMLInputElement>) {
+    validateEmail();
+    setEmail(e.target.value);
+  }
+
   return (
     <LoginContainer>
       <SiteLogo
@@ -120,11 +137,11 @@ function Login() {
       <LoginInput
         label="E-mail"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={handleLoginChange}
         helperText={emailError}
         error={!!emailError}
         type="email"
-        onKeyPress={handleKeyPress}
+        onKeyUp={handleKeyPress}
         onBlur={validateEmail}
       />
       <LoginInput
@@ -134,7 +151,7 @@ function Login() {
         onChange={handlePasswordChange}
         helperText={passwordError}
         error={!!passwordError}
-        onKeyPress={handleKeyPress}
+        onKeyUp={handleKeyPress}
         onBlur={validatePassword}
       />
       <Space />
