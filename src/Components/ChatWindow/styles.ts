@@ -4,6 +4,7 @@ export const ChatBody = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 100vh;
+  padding-bottom: 96px;
+  padding-top: 16px;
   width: 100%;
 `;
