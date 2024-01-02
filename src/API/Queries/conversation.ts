@@ -8,7 +8,7 @@ import { useLoggedUser } from 'Stores/loggedUser';
 export const useFetchConversations = () => {
   const { loggedUser } = useLoggedUser((state) => state);
   return useQuery(
-    [QueryKeys.conversationList],
+    [QueryKeys.conversationList, loggedUser._id],
     async () => {
       const response = await axiosRequest.get<ConversationResource[]>(
         `/user/${loggedUser._id}/conversation`

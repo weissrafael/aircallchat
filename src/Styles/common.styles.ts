@@ -42,12 +42,14 @@ export const PageHeader = styled.div`
 `;
 
 export const ErrorHeader = styled(PageHeader)`
-  align-items: flex-start;
+  align-items: center;
   font-size: 1.8rem;
-  justify-content: flex-start;
+  justify-content: center;
   margin-bottom: ${spacing.large};
   span {
     font-size: 1rem;
+    text-align: center;
+    width: 100%;
   }
 `;
 
