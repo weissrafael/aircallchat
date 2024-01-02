@@ -17,7 +17,7 @@ function ChatFooter() {
   const { selectedConversation, setChatIsLoading } = useChatStore(
     (state) => state
   );
-  const { refetch } = useMessages.useGetMessage(selectedConversation._id);
+  const { refetch } = useMessages.useGetMessages(selectedConversation._id);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);

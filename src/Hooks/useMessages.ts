@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useFetchMessages } from 'API/Queries/message';
 import { MessageResource } from 'Models/MessageResource';
 
-const useGetMessage = (id: string) => {
+const useGetMessages = (id: string) => {
   const { data, isLoading, isError, refetch, isFetching } =
     useFetchMessages(id);
 
@@ -32,4 +32,4 @@ const useGetMessage = (id: string) => {
   };
 };
 
-export default { useGetMessage };
+export default { useGetMessages };
