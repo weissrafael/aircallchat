@@ -48,7 +48,6 @@ function Login() {
     {
       onSuccess: (data) => {
         const { token, user } = data;
-        console.log('data', data);
         setLoggedUser(user);
         setToken(token);
         navigate('/inbox');
@@ -139,19 +138,12 @@ function Login() {
         onBlur={validatePassword}
       />
       <Space />
-      <Space />
       <RoundButton
         style={{ width: '100%', marginBottom: spacing.small }}
         onClick={handleLogin}
         variant="primary"
         size="big"
-        disabled={
-          !!emailError ||
-          !!passwordError ||
-          !email ||
-          password.length < 8 ||
-          isLoading
-        }
+        disabled={!!emailError || !!passwordError || isLoading}
       >
         Login
       </RoundButton>

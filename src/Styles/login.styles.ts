@@ -9,6 +9,12 @@ export const LoginContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  .MuiFormHelperText-contained {
+    border-radius: 12px;
+    position: absolute;
+    right: 0;
+    top: 30px;
+  }
 `;
 
 export const LoginInput = styled(TextField)`
