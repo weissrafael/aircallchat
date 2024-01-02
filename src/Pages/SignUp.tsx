@@ -15,6 +15,7 @@ import {
   FormRow,
 } from 'Styles/signUp.styles';
 import { spacing } from 'Styles/styleGuide';
+import { emailValidation, passwordValidation } from 'Utils/inputValidation';
 
 function SignUp() {
   const [name, setName] = useState('');
@@ -81,13 +82,7 @@ function SignUp() {
   }, [confirmPassword]);
 
   const validateEmail = () => {
-    if (email === '') {
-      setEmailError('E-mail cannot be empty');
-    } else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      setEmailError('Please enter a valid email address');
-    } else {
-      setEmailError('');
-    }
+    emailValidation(email, setEmailError);
   };
 
   const validateName = () => {
@@ -107,13 +102,7 @@ function SignUp() {
   };
 
   const validatePassword = () => {
-    if (password === '') {
-      setPasswordError('Password cannot be empty');
-    } else if (password.length < 8) {
-      setPasswordError('Password must be at least 8 characters long');
-    } else {
-      setPasswordError('');
-    }
+    passwordValidation(password, setPasswordError);
   };
 
   const validateConfirmPassword = () => {
@@ -132,12 +121,15 @@ function SignUp() {
     validateConfirmPassword();
     validateName();
     validateLastname();
+    const anyInputIsEmpty =
+      !email || !password || !confirmPassword || !name || !lastname;
     if (
       !emailError &&
       !passwordError &&
       !confirmPasswordError &&
       !nameError &&
-      !lastnameError
+      !lastnameError &&
+      !anyInputIsEmpty
     ) {
       setChooseAvatarMode(true);
     }

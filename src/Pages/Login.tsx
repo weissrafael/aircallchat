@@ -10,6 +10,7 @@ import { spacing } from 'Styles/styleGuide';
 
 import { loginContact } from '../API/Mutations/contact';
 import FullScreenLoader from '../Components/FullscreenLoader/FullScreenLoader';
+import { emailValidation, passwordValidation } from '../Utils/inputValidation';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -19,6 +20,14 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { setLoggedUser, setToken } = useLoggedUser((state) => state);
+
+  const validateEmail = () => {
+    emailValidation(email, setEmailError);
+  };
+
+  const validatePassword = () => {
+    passwordValidation(password, setPasswordError);
+  };
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -37,26 +46,6 @@ function Login() {
       validatePassword();
     }
   }, [password]);
-
-  const validateEmail = () => {
-    if (email === '') {
-      setEmailError('E-mail cannot be empty');
-    } else if (!/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      setEmailError('Please enter a valid email address');
-    } else {
-      setEmailError('');
-    }
-  };
-
-  const validatePassword = () => {
-    if (password === '') {
-      setPasswordError('Password cannot be empty');
-    } else if (password.length < 8) {
-      setPasswordError('Password must be at least 8 characters long');
-    } else {
-      setPasswordError('');
-    }
-  };
 
   const mutateLoginContact = useMutation(
     async () => {
