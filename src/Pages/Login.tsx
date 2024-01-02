@@ -22,11 +22,11 @@ function Login() {
   const { setLoggedUser, setToken } = useLoggedUser((state) => state);
 
   const validateEmail = () => {
-    emailValidation(email, setEmailError);
+    emailValidation(email);
   };
 
   const validatePassword = () => {
-    passwordValidation(password, setPasswordError);
+    passwordValidation(password);
   };
 
   useEffect(() => {

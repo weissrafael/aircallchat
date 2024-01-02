@@ -1,16 +1,25 @@
 import { axiosRequest } from 'API/axiosInstance';
-import { ContactResource } from 'Models/ContactResource';
+import {
+  ContactCreationResource,
+  ContactResource,
+} from 'Models/ContactResource';
 
 interface ContactTokenResponse {
   token: string;
   user: ContactResource;
 }
 
-export const createNewContact = async (
-  contact: ContactResource,
-  email: string,
-  password: string
-) => {
+interface CreateContactMutationArgs {
+  contact: ContactCreationResource;
+  email: string;
+  password: string;
+}
+
+export const createNewContact = async ({
+  contact,
+  email,
+  password,
+}: CreateContactMutationArgs) => {
   const response = await axiosRequest.post<ContactTokenResponse>(`/signup`, {
     ...contact,
     email,
