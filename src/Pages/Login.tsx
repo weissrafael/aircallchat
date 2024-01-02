@@ -12,7 +12,7 @@ import { LoginContainer, LoginInput, Space } from 'Styles/login.styles';
 import { spacing } from 'Styles/styleGuide';
 
 const Login: React.FC = () => {
-  const { formState, updateInput, validateInput, canProceed, errors } =
+  const { formState, updateInput, validateInput, canProceedLogin, errors } =
     useForm();
   const navigate = useNavigate();
   const { setLoggedUser, setToken } = useLoggedUser((state) => state);
@@ -43,7 +43,7 @@ const Login: React.FC = () => {
   const handleLogin = () => {
     validateInput('email');
     validateInput('password');
-    if (canProceed()) {
+    if (canProceedLogin()) {
       mutate();
     }
   };

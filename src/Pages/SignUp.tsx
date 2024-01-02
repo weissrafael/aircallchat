@@ -11,7 +11,7 @@ import useForm from 'Hooks/useForm';
 import { useLoggedUser } from 'Stores/loggedUser';
 import { SignUpContainer } from 'Styles/signUp.styles';
 
-import { ContactResource } from '../Models/ContactResource';
+import { ContactResource, FormState } from '../Models/ContactResource';
 
 const DEFAULT_AVATAR = 1;
 
@@ -21,8 +21,14 @@ const SignUp: React.FC = () => {
   const { setToken, setLoggedUser } = useLoggedUser((state) => state);
   const navigate = useNavigate();
 
-  const { formState, updateInput, validateInput, canProceed, errors } =
-    useForm();
+  const {
+    formState,
+    updateInput,
+    validateInput,
+    canProceedSignUp,
+    errors,
+    validateAllInputs,
+  } = useForm();
 
   const { mutate, isLoading } = useMutation(createNewContact, {
     onSuccess: (data: { token: string; user: ContactResource }) => {
@@ -38,7 +44,8 @@ const SignUp: React.FC = () => {
   });
 
   const handleContinue = () => {
-    if (canProceed()) setChooseAvatarMode(true);
+    validateAllInputs();
+    if (canProceedSignUp()) setChooseAvatarMode(true);
   };
 
   const CreateNewAccount = () => {

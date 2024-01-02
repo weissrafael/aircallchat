@@ -6,13 +6,7 @@ import { SignUpInput, Space, FormRow } from 'Styles/signUp.styles';
 import { spacing } from 'Styles/styleGuide';
 
 interface SignUpFormProps {
-  formState: {
-    name: string;
-    lastname: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  };
+  formState: FormState;
   errors: {
     [key: string]: string;
   };

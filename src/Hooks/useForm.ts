@@ -1,9 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { FormState } from 'Models/ContactResource'; // Assumed external validation functions
 import { emailValidation, passwordValidation } from 'Utils/inputValidation';
 
-const useForm = () => {
+interface FormState {
+  name: string;
+  lastname: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+const useSignUpForm = () => {
   const [formState, setFormState] = useState<FormState>({
     name: '',
     lastname: '',
@@ -13,53 +20,62 @@ const useForm = () => {
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  useEffect(() => {
-    Object.keys(formState).forEach((field) => {
-      if (formState[field as keyof FormState] !== '') {
-        validateInput(field as keyof FormState);
-      }
-    });
-  }, [formState]);
-
   const updateInput = (field: keyof FormState, value: string) => {
     setFormState({ ...formState, [field]: value });
   };
 
-  const validateInput = (field: keyof FormState) => {
-    let error = '';
+  const getValidationError = (field: keyof FormState): string => {
+    const { name, lastname, email, password, confirmPassword } = formState;
     switch (field) {
       case 'name':
-        error = formState.name ? '' : 'Name cannot be empty';
-        break;
+        return name ? '' : `Can't be empty`;
       case 'lastname':
-        error = formState.lastname ? '' : 'Lastname cannot be empty';
-        break;
+        return lastname ? '' : `Can't be empty`;
       case 'email':
-        error = emailValidation(formState.email);
-        break;
+        return emailValidation(email);
       case 'password':
-        error = passwordValidation(formState.password);
-        break;
+        return passwordValidation(password);
       case 'confirmPassword':
-        error =
-          formState.confirmPassword === formState.password
-            ? ''
-            : 'Passwords do not match';
-        break;
+        return confirmPassword === password ? '' : 'Passwords do not match';
       default:
-        break;
+        return '';
     }
-    setErrors({ ...errors, [field]: error });
   };
 
-  const canProceed = () => {
+  const validateInput = (field: keyof FormState) => {
+    const error = getValidationError(field);
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: error }));
+  };
+
+  const validateAllInputs = () => {
+    const newErrors = Object.keys(formState).reduce((acc, field) => {
+      const error = getValidationError(field as keyof FormState);
+      return { ...acc, [field]: error };
+    }, {} as { [key: string]: string });
+    setErrors(newErrors);
+  };
+
+  const canProceedSignUp = () => {
     return (
       Object.values(formState).every((value) => value !== '') &&
       Object.values(errors).every((error) => error === '')
     );
   };
 
-  return { formState, updateInput, validateInput, canProceed, errors };
+  const canProceedLogin = () => {
+    const { email, password } = formState;
+    return email !== '' && password !== '';
+  };
+
+  return {
+    formState,
+    updateInput,
+    validateInput,
+    validateAllInputs,
+    canProceedSignUp,
+    canProceedLogin,
+    errors,
+  };
 };
 
-export default useForm;
+export default useSignUpForm;
