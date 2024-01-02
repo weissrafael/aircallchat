@@ -8,7 +8,7 @@ import RoundButton from 'Components/RoundButton/RoundButton';
 import { useChatStore } from 'Stores/chat';
 import { useGroupStore } from 'Stores/group';
 import { useLoggedUser } from 'Stores/loggedUser';
-import { CardList } from 'Styles/common.styles';
+import { CardList, PageHeader } from 'Styles/common.styles';
 import { LoginInput, Space } from 'Styles/login.styles';
 
 export default function CreateGroup() {
@@ -48,6 +48,7 @@ export default function CreateGroup() {
 
   return (
     <>
+      <Space />
       <LoginInput
         id="outlined-basic"
         label="Group Name"
@@ -70,7 +71,9 @@ export default function CreateGroup() {
         Create Group
       </RoundButton>
       <Space />
-      <Space />
+      <PageHeader>
+        <h1>Members</h1>
+      </PageHeader>
       <CardList>
         {selectedUsers.map((item) => (
           <ContactCard key={item._id} contact={item} />
