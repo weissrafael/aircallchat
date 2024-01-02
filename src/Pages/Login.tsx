@@ -17,7 +17,6 @@ function Login() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [untouched, setUntouched] = useState(true);
   const navigate = useNavigate();
   const { setLoggedUser, setToken } = useLoggedUser((state) => state);
 
@@ -28,9 +27,16 @@ function Login() {
   }, [navigate]);
 
   useEffect(() => {
-    validateEmail();
-    validatePassword();
-  }, [email, password]);
+    if (email !== '') {
+      validateEmail();
+    }
+  }, [email]);
+
+  useEffect(() => {
+    if (password !== '') {
+      validatePassword();
+    }
+  }, [password]);
 
   const validateEmail = () => {
     if (email === '') {
@@ -86,12 +92,10 @@ function Login() {
   }
 
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
-    validatePassword();
     setPassword(e.target.value);
   }
 
   function handleLoginChange(e: React.ChangeEvent<HTMLInputElement>) {
-    validateEmail();
     setEmail(e.target.value);
   }
 
